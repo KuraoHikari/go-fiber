@@ -2,24 +2,22 @@ package main
 
 import (
 	"go-fiber/database"
+	"go-fiber/database/migration"
 	"go-fiber/routes"
 
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
-var (
-	db *gorm.DB = database.SetupDatabaseConnection()
-)
+// var (
+// 	db *gorm.DB = database.SetupDatabaseConnection()
+// )
 
 func main() {
-	defer database.CloseDatabaseConnection(db)
+	defer database.CloseDatabaseConnection(database.DB)
+	database.DatabaseInit()
+	migration.RunMigration()
 
 	app := fiber.New()
-
-	// app.Get("/", func(c *fiber.Ctx) error {
-	//     return c.SendString("Hello, World!")
-	// })
 
 	routes.RouteInit(app)
 
