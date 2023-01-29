@@ -12,6 +12,10 @@ import (
 )
 
 func UserHandlerGetAll(ctx *fiber.Ctx) error {
+
+	// userInfo := ctx.Locals("userInfo")
+	// log.Panicln("userindo data :: ", userInfo)
+
 	var users []entity.User
 	result := database.DB.Find(&users)
 	if result.Error != nil {
