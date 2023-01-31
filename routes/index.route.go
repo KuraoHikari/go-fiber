@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"go-fiber/config"
 	"go-fiber/handler"
 	"go-fiber/middleware"
 	"go-fiber/utils"
@@ -10,7 +9,8 @@ import (
 )
 
 func RouteInit(route *fiber.App) {
-	route.Static("/public", config.ProjectRootPath+"/public/assets")
+	//route.Static("/public", config.ProjectRootPath+"/public")
+	route.Static("/public", "./public") // gunakan ini terlebih dahulu
 
 	route.Post("/login", handler.Login)
 
@@ -21,4 +21,7 @@ func RouteInit(route *fiber.App) {
 	route.Delete("user/:id", handler.UserHandlerDelete)
 
 	route.Post("/book", utils.HandleSingleFile, handler.BookHandlerCreate)
+
+	route.Post("/gallery", utils.HandleMultipleFile, handler.PhotoHandlerCreate)
+	route.Delete("/gallery/:id", utils.HandleMultipleFile, handler.PhotoHandlerDelete)
 }
